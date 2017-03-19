@@ -61,21 +61,34 @@ tb : PROCESS
    end tbvector;
    BEGIN
       wait for delay; -- inputs uit fase met clk (meer realistisch)
-      tbvector("01");                       
+      tbvector("01"); -- reset
+      tbvector("10"); -- aantal clk cycli dender
+      tbvector("00");
+      tbvector("10");
+      tbvector("00");
+      tbvector("10");
+      tbvector("10"); -- houdt ingang 5 clock cycli stabiel hoog
       tbvector("10");
       tbvector("10");
       tbvector("10");
       tbvector("10");
+      tbvector("10"); -- aantal clk cycli dender
+      tbvector("00");
       tbvector("10");
+      tbvector("00");
+      tbvector("10");
+      tbvector("00"); -- houdt ingang 5 clock cycli stabiel laag
       tbvector("00");
       tbvector("00");
       tbvector("00");
-      tbvector("10");
-      tbvector("10");
-      tbvector("10");
-      tbvector("10");
+      tbvector("00");
+      tbvector("00"); -- aantal clk cycli dender
+      tbvector("00");
       tbvector("10");
       tbvector("00");
+      tbvector("10");
+	
+
       
             
       end_of_sim <= true;
