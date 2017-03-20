@@ -42,10 +42,10 @@ begin
 			when "1110" =>
 				seg_out(6 downto 0) <= "0110000";
 			when "1111" =>
-				seg_out <= "0111000";
+				seg_out(6 downto 0) <= "0111000";
 			-- 'X' weergeven 
 			when others =>
-				seg_out <= "0010111";
+				seg_out(6 downto 0) <= "0010111";
 			seg_out(7) <= dot;
 		end case;
 	end process comb_sevensegment;

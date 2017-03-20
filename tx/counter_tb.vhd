@@ -55,9 +55,11 @@ tb : PROCESS
    wait for period;
    end tbvector;
    BEGIN
-      wait for delay; -- inputs uit fase met clk (meer realistisch)
 	  -- reset
 	  tbvector("100");
+	  wait for period/2;
+	  tbvector("010");
+	  tbvector("010");
 	  -- omhoog tellen van 0 tot 0 (van 0 tot 15, gevolgd door overflow)
 	  for i in 1 to 16 loop
 		  tbvector("010"); 

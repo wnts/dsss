@@ -20,16 +20,16 @@ begin
 		end if;
 	end process syn_counter;
 
-	comb_counter : process(up, down, cnt_next, cnt_cur)
+	comb_counter : process(up, down, cnt_cur)
 	begin
+		count <= std_logic_vector(cnt_cur);
 		if up = '1' then
 			cnt_next <= cnt_cur + 1;
 		elsif down = '1' then
 			cnt_next <= cnt_cur - 1;
 		else
 			cnt_next <= cnt_cur;
-		end if;
-		count <= std_logic_vector(cnt_cur);
+		end if;		
 	end process comb_counter;
 end behave;
 

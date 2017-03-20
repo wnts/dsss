@@ -60,7 +60,7 @@ tb : PROCESS
        wait for period;
    end tbvector;
    BEGIN
-      wait for delay; -- inputs uit fase met clk (meer realistisch)
+      wait for delay; -- inputs uit fase met clk (meer realistisch voor debouncer, input is asynchroon (gebruiker))
       tbvector("01"); -- reset
       tbvector("10"); -- aantal clk cycli dender
       tbvector("00");

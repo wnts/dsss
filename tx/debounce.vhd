@@ -32,8 +32,7 @@ end process syn_debounce;
 
 syn_comb: process(cha, reg_cur)
 begin
-  syncha <= reg_cur(0);
-  
+  syncha <= reg_cur(0);  
   if (cha xor reg_cur(0)) = '1' then
     reg_next <= cha & reg_cur(4 downto 1);
   else

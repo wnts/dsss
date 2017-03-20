@@ -53,7 +53,6 @@ tb : PROCESS
        wait for period;
    end tbvector;
    BEGIN
-      wait for delay; -- inputs uit fase met clk (meer realistisch)      
       tbvector("X0");
 	  tbvector("X0");
 	  tbvector("X0");
@@ -61,8 +60,7 @@ tb : PROCESS
 	  tbvector("X0");
 	  tbvector("X0");
 	  tbvector("X1");
-	  tbvector("X0");
-            
+	  tbvector("X0");            
       end_of_sim <= true;
       wait;
    END PROCESS;
