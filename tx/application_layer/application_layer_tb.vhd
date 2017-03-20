@@ -25,10 +25,10 @@ constant delay		: time :=  10 ns;
 signal end_of_sim	: boolean := false;
 
 signal clk		: std_logic;
-signal reset	: std_logic := '0';
+signal reset	: std_logic;
 signal up, down	: std_logic;
-signal count	: std_logic_vector(3 downto 0) := (others => '0');
-signal segment  : std_logic_vector(7 downto 0) := (others => '0');
+signal count	: std_logic_vector(3 downto 0); 
+signal segment  : std_logic_vector(7 downto 0);
 
 begin
 
