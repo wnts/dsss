@@ -1,6 +1,6 @@
 library ieee;
 use ieee.std_logic_1164.all;
-
+-- ** TODO: eerst preamble eruitschuiven!!! verander richting
 entity dataregister is
 	port(clk		: in std_logic;
 		 ld			: in std_logic;
