@@ -40,16 +40,12 @@ begin
 	comb_access_layer : process(pn_ml1, pn_ml2, pn_gold, sdo_posenc, sel)
 	begin
 		case sel is
-			when "00" => 
-				sdo_spread <= sdo_posenc;		
 			when "01" =>
 				sdo_spread <= sdo_posenc xor pn_ml1;
 			when "10" =>
-				sdo_spread <= sdo_posenc xor pn_ml1;
-			when "11" =>
-				sdo_spread <= sdo_posenc xor pn_gold;	
+				sdo_spread <= sdo_posenc xor pn_ml2;
 			when others =>
-				sdo_spread <= sdo_posenc;
+				sdo_spread <= sdo_posenc xor pn_gold;
 		end case;
 	end process comb_access_layer;
 end behave;

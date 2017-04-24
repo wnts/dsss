@@ -1,6 +1,5 @@
 library ieee;
 use ieee.std_logic_1164.all;
--- ** TODO: eerst preamble eruitschuiven!!! verander richting
 entity dataregister is
 	port(clk		: in std_logic;
 		 ld			: in std_logic;
@@ -25,10 +24,10 @@ begin
 		if ld = '1' then
 			reg_next <= PREAMBLE & data;
 		elsif sh = '1' then
-			reg_next <= '0' & reg_cur(10 downto 1);
+			reg_next <= reg_cur(9 downto 0) & '0';
 		else
 			reg_next <= reg_cur;
 		end if;
-		sdo_posenc <= reg_cur(0);
+		sdo_posenc <= reg_cur(10);
 	end process com_dataregister;
 end behave;

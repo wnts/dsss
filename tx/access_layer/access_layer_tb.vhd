@@ -90,7 +90,7 @@ begin
 		tbvector("100");
 		-- 11 bits (1 word) versturen als 31 chip lange pn codes duurt 11*31 chip periods (chip periode = clk periode)
 		for i in 1 to 11*31 loop
-			-- Zet pn code selector op code 1
+			-- Zet pn code selecctor op code 0
 			tbvector("001");
 		end loop;
 		end_of_sim <= true;
