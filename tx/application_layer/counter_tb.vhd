@@ -10,6 +10,7 @@ architecture structural of counter_tb is
 
 -- Component Declaration
 component counter is
+	generic(N : positive);
 	port(clk, reset : in std_logic;
 	     up, down: in std_logic;
 	     count: out std_logic_vector(3 downto 0));
@@ -26,12 +27,13 @@ signal up, down:  std_logic;
 signal count : std_logic_vector(3 downto 0);
 
 BEGIN
-	uut: counter PORT MAP(
-      clk => clk,
-      reset => reset,
-	  up => up,
-	  down => down,
-	  count => count);
+	uut: counter 
+		generic map(N => 4)
+		port map(clk => clk,
+	             reset => reset,
+   			     up => up,
+	  	         down => down,
+    	  	     count => count);
 	clock : process
    begin 
        clk <= '0';

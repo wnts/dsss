@@ -28,6 +28,7 @@ component debouncer is
 end component;
 
 component counter is
+	generic(N : positive);
 	port(clk, reset : in std_logic;
 		 up, down	: in std_logic;
 		 count		: out std_logic_vector(3 downto 0));
@@ -65,6 +66,7 @@ begin
 				 syncha => down_debounced,			
 				 edge	=> down_edge);
 	counter_inst : counter
+		generic map(N   => 8)
 		port map(clk	=> clk,
 				 reset	=> reset,
 				 up		=> up_edge,				 

@@ -3,13 +3,14 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity counter is
+	generic(N : positive);
 	port(clk, reset : in std_logic;
 	     up, down: in std_logic;
-	     count: out std_logic_vector(3 downto 0));
+	     count: out std_logic_vector(N-1 downto 0));
 end counter;
 
 architecture behave of counter is
-	signal cnt_cur, cnt_next : unsigned(3 downto 0);
+	signal cnt_cur, cnt_next : unsigned(N-1 downto 0);
 begin
 	syn_counter : process(clk)
 	begin
