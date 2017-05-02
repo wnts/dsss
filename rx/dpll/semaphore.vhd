@@ -25,7 +25,7 @@ begin
 		end if;
 	end process syn_semaphore;
 	
-	com_semaphore : process(arm)
+	com_semaphore : process(present_state, arm, fire, seg)
 	begin
 		case present_state is 
 			-- default segment C
@@ -35,14 +35,18 @@ begin
 				else
 					next_state <= present_state;					
 				end if;
-			when as => sem <= (others => '0');
+			when as => sem <= seg;
 				if fire = '1' then
-					next_state <= fs;
+					next_state <= fs;					
 				else
 					next_state <= present_state;
 				end if;
 			when fs => sem <= seg;
-				next_state <= ws;
+				if arm = '1' then
+					next_state <= as;
+				else
+					next_state <= ws;
+				end if;
 		end case;					
 	end process com_semaphore;
 end behave;

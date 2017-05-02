@@ -58,16 +58,27 @@ begin
 		-- *************
 		-- *** Reset ***
 		-- *************
-		-- inputs uit fase met clk (meer realistisch voor gebruiker die op knoppen drukt (asynchroon))      	
-		wait for delay; 
 		-- simuleer aantal transities
 		tbvector("0");
-		tbvector("1");
+		tbvector("0");
+		tbvector("0");
+		tbvector("0");
+		tbvector("0");
 		tbvector("0");
 		tbvector("1");
 		tbvector("1");
+		tbvector("1");
+		tbvector("1");
+		tbvector("1");
 		tbvector("0");
 		tbvector("0");
+		tbvector("0");
+		tbvector("0");
+		tbvector("0");
+		tbvector("0");
+		tbvector("1");
+		tbvector("1");
+		tbvector("1");
 		tbvector("1");
 		tbvector("1");
 		end_of_sim <= true;

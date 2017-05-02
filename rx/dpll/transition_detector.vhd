@@ -8,20 +8,21 @@ entity transition_detector is
 end transition_detector;
 
 architecture behave of transition_detector is	
-	signal sdi_spread_prev : std_logic;
-		signal edge_up, edge_down : std_logic;
+	signal present_sig : std_logic;
+	signal prev_sig : std_logic;
+
 begin
 	syn_transition_detector : process(clk)
 	begin
 		if rising_edge(clk) then
-			sdi_spread_prev <= sdi_spread;
+			prev_sig <= present_sig;
 		end if;
 	end process syn_transition_detector;
-	
-	com_transition_detector : process(sdi_spread_prev, sdi_spread)
+
+	com_transition_detector : process(present_sig, prev_sig, sdi_spread)
 	begin
-		edge_up <= (not sdi_spread_prev) and (sdi_spread);
-		edge_down <= (sdi_spread_prev) and (sdi_spread);
-		exTB <= edge_down or edge_up;
-	end process com_transition_detector;
+		present_sig <= sdi_spread;
+		exTB <= present_sig xor prev_sig;
+	end process com_transition_detector;	
+
 end behave;

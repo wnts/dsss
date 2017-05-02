@@ -87,6 +87,8 @@ begin
 		-- preload test
 		tbvector("1000");
 		data <= "100";
+		wait for period;
+		data <= "010";
 		tbvector("0001");
 		for i in 0 to 2**N loop
 			tbvector("0010");

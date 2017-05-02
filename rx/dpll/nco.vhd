@@ -32,13 +32,13 @@ architecture behave of nco is
 			 min_tick	: out std_logic);
 	end component;
 	-- interne signalen declaraties
-	signal count : unsigned(3 downto 0);	
+	signal count : unsigned(4 downto 0);	
 	signal load : std_logic;
-	signal data : std_logic_vector(3 downto 0);
+	signal data : std_logic_vector(4 downto 0);
 begin
 	-- counter instantieren
 	counter_inst : universal_counter
-		generic map(N => 4)
+		generic map(N => 5)
 		port map(clk	 	 	 => clk,      
 				 reset		 	 => reset,
 				 up			 	 => open,
@@ -54,17 +54,17 @@ begin
 		-- semaphore-naar-preload-waarde decoder
 		case sem is
 			when seg_a => 
-				data <= "1010";	-- counter+3 = 10
+				data <= "10010";	-- counter+3 = 18
 			when seg_b => 
-				data <= "1000";	-- counter+1 = 8
+				data <= "10000";	-- counter+1 = 16
 			when seg_c => 
-				data <= "0111";	-- counter = 7
+				data <= "01111";	-- counter = 15
 			when seg_d => 
-				data <= "0110";	-- counter-1 = 6
+				data <= "01110";	-- counter-1 = 14
 			when seg_e => 
-				data <= "0100";	-- counter-3 = 4
+				data <= "01100";	-- counter-3 = 12
 			when others =>
-				data <= "0111";	-- counter = 7
+				data <= "01111";	-- counter = 15
 		end case;
 		if count = 0 then
 			load <= '1';		

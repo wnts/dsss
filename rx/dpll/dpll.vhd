@@ -13,7 +13,9 @@ end dpll;
 
 architecture behave of dpll is	
 	-- interne signaal declaraties
-	signal count : std_logic_vector(3 downto 0);
+	signal extb : std_logic;
+	signal seg, sem : std_logic_vector(4 downto 0);
+	signal cs, cs1, cs2 : std_logic;
 	-- externe component declaratie
 	component transition_detector is
 		port(clk		: in std_logic;	     		 
@@ -26,36 +28,52 @@ architecture behave of dpll is
 		     extb		: in std_logic;
 			 seg		: out std_logic_vector(4 downto 0));
 	end component;
-
-
+	component semaphore is
+		port(clk		: in std_logic;
+			 reset		: in std_logic;	     		 
+		     arm		: in std_logic;
+	         fire		: in std_logic;
+			 seg		: in std_logic_vector(4 downto 0);
+			 sem		: out std_logic_vector(4 downto 0));		
+	end component;
+	component nco is
+		port(clk			: in std_logic;
+			 reset			: in std_logic;	     		 
+			 sem			: in std_logic_vector(4 downto 0);
+			 chip_sample	: out std_logic;
+			 chip_sample1	: out std_logic;
+			 chip_sample2	: out std_logic);
+	end component;
 begin
-	-- counter instantieren	
-	counter_inst : universal_counter
-		generic map(N => 4)
-		port map(clk	 	 => clk,      
-				 reset		 => extb,
-				 up			 => '1',
-				 down		 => open,
-				 load		 => open,
-				 data		 => open,
-				 count		 => count,
-				 min_tick	 => open,
-				 max_tick	 => open);
-	
-	com_dpll : process(count, extb)
-	begin
-		if unsigned(count)  >= 0 and unsigned(count) <= 4 then
-			seg <= seg_a;
-		elsif unsigned(count) >= 5 and unsigned(count) <= 6 then
-			seg <= seg_b;
-		elsif unsigned(count) >= 7 and unsigned(count) <= 8 then
-			seg <= seg_c;
-		elsif unsigned(count) >= 9 and unsigned(count) <= 10 then
-			seg <= seg_d;
-		elsif unsigned(count) >= 11 and unsigned(count) <= 15 then
-			seg <= seg_e; 
-		else
-			seg <= seg_c;
-		end if;
-	end process com_dpll;
+	-- transition detector instantieren		
+	transition_detector_inst : transition_detector
+		port map(clk		=> clk,
+				 sdi_spread => sdi_spread,
+				 extb		=> extb);
+	-- transition-naar-segment decoder instantieren
+	transition_seg_decoder_inst : transition_seg_decoder
+		port map(clk		=> clk,
+				 reset		=> reset,
+				 extb		=> extb,
+				 seg		=> seg);
+	-- semaphore instantieren
+	semaphore_inst : semaphore
+		port map(clk		=> clk,
+				 reset		=> reset,
+				 arm		=> extb,
+				 fire		=> cs,
+				 seg		=> seg,
+				 sem		=> sem);
+	-- nco instantieren
+	nco_inst : nco
+		port map(clk			=> clk,
+				 reset		 	=> reset,
+				 sem		 	=> sem,
+				 chip_sample 	=> cs,
+				 chip_sample1	=> cs1,
+				 chip_sample2	=> cs2);
+	-- outputs
+	chip_sample  <= cs;
+	chip_sample1 <= cs1;
+	chip_sample2 <= cs2;	
 end behave;

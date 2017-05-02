@@ -29,7 +29,7 @@ begin
 		end if;
 	end process syn_universal_counter;
 	
-	com_universal_counter : process(up, down, load, present_count)
+	com_universal_counter : process(up, down, load, present_count, data)
 	begin
 		-- next_count
 		if load = '1' then
