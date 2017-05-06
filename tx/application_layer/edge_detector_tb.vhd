@@ -57,10 +57,17 @@ tb : PROCESS
 	  tbvector("X0");
 	  tbvector("X0");
 	  tbvector("X1");
+	  tbvector("X1");
+	  tbvector("X1");
+	  tbvector("X1");
+	  tbvector("X0");
+	  tbvector("X0");
 	  tbvector("X0");
 	  tbvector("X0");
 	  tbvector("X1");
-	  tbvector("X0");            
+	  tbvector("X1");
+	  tbvector("X1");
+	  tbvector("X1");
       end_of_sim <= true;
       wait;
    END PROCESS;
