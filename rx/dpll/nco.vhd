@@ -23,6 +23,7 @@ architecture behave of nco is
 		generic(N		: positive);
 		port(clk		: in std_logic;
 			 reset		: in std_logic;	     		 
+			 en			: in std_logic;
 		     up			: in std_logic						:= '0';
 	         down		: in std_logic;						
 			 load		: in std_logic;		
@@ -35,12 +36,15 @@ architecture behave of nco is
 	signal count : unsigned(4 downto 0);	
 	signal load : std_logic;
 	signal data : std_logic_vector(4 downto 0);
+	signal present_chip_samples, next_chip_samples : std_logic_vector(1 downto 0) := "00";
+	
 begin
 	-- counter instantieren
 	counter_inst : universal_counter
 		generic map(N => 5)
 		port map(clk	 	 	 => clk,      
 				 reset		 	 => reset,
+				 en				 => '1',
 				 up			 	 => open,
 				 down		 	 => '1',
 				 load		 	 => load,
@@ -49,7 +53,14 @@ begin
 				 min_tick	 	 => open,
 				 max_tick	 	 => open);
 	
-	com_nco : process(count, sem)
+	syn_nco : process(clk)
+	begin
+		if rising_edge(clk) then
+			present_chip_samples <= next_chip_samples;
+		end if;
+	end process syn_nco;
+   -- TODO: chip_sample delay met schuifregister
+	com_nco : process(count, sem, present_chip_samples)
 	begin
 		-- semaphore-naar-preload-waarde decoder
 		case sem is
@@ -66,28 +77,23 @@ begin
 			when others =>
 				data <= "01111";	-- counter = 15
 		end case;
+
 		if count = 0 then
 			load <= '1';		
 		else
 			load <= '0';
 		end if;
-		-- outputs
-		if count = 2 then
-			chip_sample2 <= '1';
-		else
-			chip_sample2 <= '0';
-		end if;
-
-		if count = 1 then
-			chip_sample1 <= '1';
-		else
-			chip_sample1 <= '0';
-		end if;
 
 		if count = 0 then
+			next_chip_samples <= present_chip_samples(0) & '1';
 			chip_sample <= '1';
 		else
+			next_chip_samples <= present_chip_samples(0) & '0';
 			chip_sample <= '0';
-		end if;		
+		end if;
+		
+		-- outputs
+		chip_sample1 <= present_chip_samples(0);
+		chip_sample2 <= present_chip_samples(1);
 	end process com_nco;
 end behave;

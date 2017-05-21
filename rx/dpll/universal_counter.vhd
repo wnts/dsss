@@ -6,6 +6,7 @@ entity universal_counter is
 	generic(N		: positive);
 	port(clk		: in std_logic;
 		 reset		: in std_logic;	     		 
+		 en			: in std_logic;
 	     up			: in std_logic;
          down		: in std_logic;
 		 load		: in std_logic;		
@@ -29,14 +30,14 @@ begin
 		end if;
 	end process syn_universal_counter;
 	
-	com_universal_counter : process(up, down, load, present_count, data)
+	com_universal_counter : process(up, down, load, present_count, data, en)
 	begin
 		-- next_count
 		if load = '1' then
 			next_count <= unsigned(data);
-		elsif up = '1' then
+		elsif en = '1' and up = '1' then
 			next_count <= present_count + 1;
-		elsif down = '1' then
+		elsif en = '1' and down = '1' then
 			next_count <= present_count - 1;
 		else
 			next_count <= present_count;

@@ -12,7 +12,7 @@ end matched_filter;
 
 architecture behave of matched_filter is	
 	constant no_ptrn   : std_logic_vector(30 downto 0) := (others => '0');
-	constant ml1_ptrn  : std_logic_vector(30 downto 0) := "1101110011111100011011101010001";
+	constant ml1_ptrn  : std_logic_vector(30 downto 0) := "0010110011111000110111010100001";
 	constant ml2_ptrn  : std_logic_vector(30 downto 0) := "1001101111101000100101011000011";
 	constant gold_ptrn : std_logic_vector(30 downto 0) := ml1_ptrn xor ml2_ptrn;
 	signal pn_ptrn 	   : std_logic_vector(30 downto 0);
@@ -45,7 +45,7 @@ begin
 			when others =>
 				pn_ptrn <= no_ptrn;
 		end case;
-		if  present_reg = pn_ptrn then
+		if  present_reg = pn_ptrn or present_reg = not pn_ptrn then
 			seq_det <= '1';
 		else
 			seq_det <= '0';

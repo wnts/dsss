@@ -23,6 +23,7 @@ architecture behave of transition_seg_decoder is
 		generic(N		: positive);
 		port(clk		: in std_logic;
 			 reset		: in std_logic;	     		 
+			 en			: in std_logic;
 		     up			: in std_logic;
 	         down		: in std_logic						:= '0';
 			 load		: in std_logic						:= '0';		
@@ -38,6 +39,7 @@ begin
 		generic map(N => 4)
 		port map(clk	 	 => clk,      
 				 reset		 => extb,
+				 en			 => '1',
 				 up			 => '1',
 				 down		 => open,
 				 load		 => open,

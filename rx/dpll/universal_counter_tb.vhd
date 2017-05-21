@@ -10,8 +10,9 @@ architecture structural of universal_counter_tb is
 	-- component declaraties
 	component universal_counter is
 		generic(N		: positive);
-		port(clk		: in std_logic;
-			 reset		: in std_logic;	     		 
+		port(clk		: in std_logic;		
+			 reset		: in std_logic;
+			 en			: in std_logic;	     		 
 		     up			: in std_logic;
 	         down		: in std_logic;
 			 load		: in std_logic;		
@@ -30,7 +31,8 @@ for uut : universal_counter use entity work.universal_counter(behave);
 	signal end_of_sim	: boolean := false;
 
 	signal clk			: std_logic;
-	signal reset		: std_logic;	     		 
+	signal reset		: std_logic;	
+	signal en			: std_logic := '1';     		 
 	signal up			: std_logic;
 	signal down			: std_logic;
 	signal load			: std_logic;		
@@ -43,6 +45,7 @@ begin
 		generic map(N 		 => N)
 		port map(clk	 	 => clk,      
 				 reset		 => reset,
+				 en			 => en,
 				 up			 => up,
 				 down		 => down,
 				 load		 => load,
@@ -93,6 +96,21 @@ begin
 		for i in 0 to 2**N loop
 			tbvector("0010");
 		end loop;
+		-- enable test
+		up <= '1';
+		en <= '0';
+		wait for period * 5;
+		en <= '1';
+		wait for period;
+		en <= '0';
+		wait for period * 5;
+		en <= '1';
+		wait for period;
+		en <= '0';
+		wait for period * 5;
+		en <= '1';
+		wait for period;
+		en <= '0';
 		end_of_sim <= true;
 		wait;
 	end process;
