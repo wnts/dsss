@@ -10,7 +10,7 @@ end dataregister;
 
 architecture behave of dataregister is
 	constant PREAMBLE : std_logic_vector(6 downto 0) := "0111110";
-	signal reg_cur, reg_next : std_logic_vector(10 downto 0);
+	signal reg_cur, reg_next : std_logic_vector(10 downto 0) := (others => '0');
 begin
 	syn_dataregister : process(clk)
 	begin

@@ -36,8 +36,6 @@ begin
 	begin
 		case present_state is
 			when ws => 
-				ld <= '0';
-				sh <= '0';				
 				if pn_start = '1' and present_count /= to_unsigned(10, present_count'Length) then
 					next_state <= ss;
 				elsif pn_start = '1' and present_count = to_unsigned(10, present_count'Length) then
@@ -47,15 +45,35 @@ begin
 				end if;
 				next_count <= present_count;
 			when ss =>
-				ld <= '0';
-				sh <= '1';
 				next_count <= present_count + 1;
 				next_state <= ws;
 			when ls =>
-				ld <= '1';
-				sh <= '0';
 				next_count <= (others => '0');
 				next_state <= ws;
 		end case;
 	end process com_sequence_controller;
+
+	com_sequence_controller_out : process(present_state, present_count, pn_start)
+	begin
+		case present_state is
+			when ws => 
+				if pn_start = '1' then
+					if present_count = to_unsigned(10, present_count'Length) then
+						ld <= '1';
+						sh <= '0';
+					else
+						ld <= '0';
+						sh <= '1';
+					end if;
+				else
+					ld <= '0';
+					sh <= '0';
+				end if;
+			when others =>
+				ld <= '0';
+				sh <= '0';
+		end case;
+
+			
+	end process com_sequence_controller_out;
 end behave;

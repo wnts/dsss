@@ -5,7 +5,7 @@ use ieee.std_logic_1164.all;
 entity pn_generator is
 	port(clk		: in std_logic;
 		 reset		: in std_logic;
-		 full_seq	: out std_logic;
+		 pn_start	: out std_logic;
 		 pn_ml1 	: out std_logic;
 		 pn_ml2 	: out std_logic;
 		 pn_gold	: out std_logic);	
@@ -42,9 +42,9 @@ begin
 		-- *** OUTPUTS ***
 		-- ***************
 		if reg1_cur = FULL1 then
-			full_seq <= '1';
+			pn_start <= '1';
 		else
-			full_seq <= '0';
+			pn_start <= '0';
 		end if;
 		pn_ml1 	<= reg1_cur(0);
 		pn_ml2 	<= reg2_cur(0);

@@ -66,7 +66,7 @@ begin
 				 syncha => down_debounced,			
 				 edge	=> down_edge);
 	counter_inst : counter
-		generic map(N   => 8)
+		generic map(N   => 4)
 		port map(clk	=> clk,
 				 reset	=> reset,
 				 up		=> up_edge,				 

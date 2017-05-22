@@ -44,6 +44,8 @@ begin
 				sdo_spread <= sdo_posenc xor pn_ml1;
 			when "10" =>
 				sdo_spread <= sdo_posenc xor pn_ml2;
+			when "11" => 
+				sdo_spread <= sdo_posenc xor pn_gold;
 			when others =>
 				sdo_spread <= sdo_posenc xor pn_gold;
 		end case;

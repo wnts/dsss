@@ -68,7 +68,7 @@ begin
 	end process clock;
 		
 	-- ************************************************************************
-	--  Deze testbench verbindt test de access_layer door deze te verbinden
+	--  Deze testbench test de access_layer door deze te verbinden
 	--  met een instantie van de datalink_layer. Er wordt dan ter simulatie 1
 	--  word data geencodeerd (preamble + inhoud van data ("1001"))
 	-- *************************************************************************
@@ -83,15 +83,15 @@ begin
 		-- *************
 		-- *** Reset ***
 		-- *************
-		-- inputs uit fase met clk (meer realistisch voor gebruiker die op knoppen drukt (asynchroon))      	
-		wait for delay; 
 		-- reset actief voor 2 clk periodes		
+		tbvector("100");	
+		tbvector("100");
 		tbvector("100");	
 		tbvector("100");
 		-- 11 bits (1 word) versturen als 31 chip lange pn codes duurt 11*31 chip periods (chip periode = clk periode)
 		for i in 1 to 11*31 loop
-			-- Zet pn code selecctor op code 0
-			tbvector("001");
+			-- Zet pn code selecctor op gold code
+			tbvector("011");
 		end loop;
 		end_of_sim <= true;
 		wait;
