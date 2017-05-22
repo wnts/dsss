@@ -2,7 +2,7 @@ library ieee;
 use ieee.numeric_std.all;
 use ieee.std_logic_1164.all;
 
-entity pn_generator is
+entity pn_generator_rx is
 	port(clk		: in std_logic;
 		 reset		: in std_logic;
 		 en			: in std_logic;
@@ -10,9 +10,9 @@ entity pn_generator is
 		 pn_ml1 	: out std_logic;
 		 pn_ml2 	: out std_logic;
 		 pn_gold	: out std_logic);	
-end pn_generator;
+end pn_generator_rx;
 
-architecture behave of pn_generator is
+architecture behave of pn_generator_rx is
 	component edge_detector is
 	port(clk		: in std_logic;	     		 
 	     syncha		: in std_logic;
@@ -30,7 +30,7 @@ begin
 		port map(clk 	=> clk,
 				 syncha => syncha,
 				 edge	=> full_seq);
-	sym_pn_generator : process(clk)
+	sym_pn_generator_rx : process(clk)
 	begin
 		if rising_edge(clk) then
 			if reset = '1' then
@@ -41,9 +41,9 @@ begin
 				reg2_cur <= reg2_next;
 			end if;
 		end if;
-	end process sym_pn_generator;
+	end process sym_pn_generator_rx;
 
-	com_pn_generator : process(reg1_cur, reg2_cur, en)
+	com_pn_generator_rx : process(reg1_cur, reg2_cur, en)
 	begin
 		if en = '1' then
 			reg1_next <= (reg1_cur(0) xor reg1_cur(3)) & reg1_cur(4 downto 1);
@@ -65,5 +65,5 @@ begin
 		pn_ml1 	<= reg1_cur(0);
 		pn_ml2 	<= reg2_cur(0);
 		pn_gold <= reg1_cur(0) xor reg2_cur(0);	
-	end process com_pn_generator;
+	end process com_pn_generator_rx;
 end behave;

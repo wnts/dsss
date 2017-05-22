@@ -3,12 +3,12 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use ieee.std_logic_unsigned.all;
 
-entity pn_generator_tb is
-end pn_generator_tb;
+entity pn_generator_rx_tb is
+end pn_generator_rx_tb;
 
-architecture structural of pn_generator_tb is
+architecture structural of pn_generator_rx_tb is
 
-	component pn_generator is
+	component pn_generator_rx is
 		port(clk		: in std_logic;
 			 reset		: in std_logic;
 			 en			: in std_logic;
@@ -18,7 +18,7 @@ architecture structural of pn_generator_tb is
 			 pn_gold	: out std_logic);	
 	end component;
 
-	for uut : pn_generator use entity work.pn_generator(behave);
+	for uut : pn_generator_rx use entity work.pn_generator_rx(behave);
 
 	constant period		: time := 100 ns;
 	constant delay		: time :=  10 ns;
@@ -31,7 +31,7 @@ architecture structural of pn_generator_tb is
 	signal pn_ml2		: std_logic;
 	signal pn_gold		: std_logic; 
 begin
-	uut : pn_generator
+	uut : pn_generator_rx
 		port map(clk 		=> clk,
 				 reset		=> reset,
 				 en		    => en,
