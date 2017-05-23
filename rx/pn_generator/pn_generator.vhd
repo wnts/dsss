@@ -2,6 +2,10 @@ library ieee;
 use ieee.numeric_std.all;
 use ieee.std_logic_1164.all;
 
+-- pn_generator_rx --
+-- Identiek aan pn_generator van de zender maar dan met
+-- een extra uitgang full_seq; deze wordt 1 puls bij elke
+-- volledige 31 chip iteratie van het schuifregister
 entity pn_generator_rx is
 	port(clk		: in std_logic;
 		 reset		: in std_logic;

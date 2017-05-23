@@ -1,6 +1,9 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
+-- matched_filter --
+-- Schuift telkens een chip binnen in een schuifregister en vergelijkt
+-- dan de volledige inhoud van het schuifregister met de geselecteerde pn-code
 entity matched_filter is
 	port(clk		: in std_logic;	     		 
 		 reset		: in std_logic;
@@ -32,7 +35,7 @@ begin
 	com_matched_filter : process(sdi_spread, present_reg, sel, pn_ptrn)
 	begin
 		next_reg <= sdi_spread & present_reg(30 downto 1);
-		-- output	
+		-- selectie van de pn code om mee te vergelijken
 		case sel is
 			when "00" => 
 				pn_ptrn <= no_ptrn;
@@ -45,6 +48,7 @@ begin
 			when others =>
 				pn_ptrn <= no_ptrn;
 		end case;
+		-- vergelijking van inhoud schuifregister, output navenant aansturen	
 		if  present_reg = pn_ptrn or present_reg = not pn_ptrn then
 			seq_det <= '1';
 		else

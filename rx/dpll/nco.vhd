@@ -12,7 +12,7 @@ entity nco is
 end nco;
 
 architecture behave of nco is	
-	-- constanten
+	-- constanten voor de segmenten mee aan te duiden
 	constant seg_a : std_logic_vector(4 downto 0) := "10000";
 	constant seg_b : std_logic_vector(4 downto 0) := "01000";
 	constant seg_c : std_logic_vector(4 downto 0) := "00100";
@@ -60,6 +60,7 @@ begin
 		end if;
 	end process syn_nco;
    -- TODO: chip_sample delay met schuifregister
+   -- DONE
 	com_nco : process(count, sem, present_chip_samples)
 	begin
 		-- semaphore-naar-preload-waarde decoder
@@ -77,13 +78,13 @@ begin
 			when others =>
 				data <= "01111";	-- counter = 15
 		end case;
-
+		-- als teller afloopt, herlaad 
 		if count = 0 then
 			load <= '1';		
 		else
 			load <= '0';
 		end if;
-
+		-- als teller afloopt, schuif chip_sample door om cs1, cs2 te verkrijgen
 		if count = 0 then
 			next_chip_samples <= present_chip_samples(0) & '1';
 			chip_sample <= '1';

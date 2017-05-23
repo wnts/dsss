@@ -52,9 +52,6 @@ begin
 		wait;
 	end process clock;
 		
-	-- ************************************************************************
-	--  Transition segment decoder
-	-- *************************************************************************
 	tb : process
 		procedure tbvector(constant stimvect : in std_logic_vector(0 downto 0))is
 		begin	  

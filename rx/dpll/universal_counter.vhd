@@ -2,6 +2,13 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
+-- universal_counter
+-- Universele counter met features:
+-- * count enable (en)
+-- * up/down 
+-- * tick wanneer counter under/overflowt (min/max_tick)
+-- * preload (controle signaal = load, preload data = data signaal)
+
 entity universal_counter is
 	generic(N		: positive);
 	port(clk		: in std_logic;

@@ -10,6 +10,7 @@ entity semaphore is
 		 sem		: out std_logic_vector(4 downto 0));		
 end semaphore;
 
+-- state diagramma: zie notas
 architecture behave of semaphore is	
 	type fsm_states is (ws, as, fs); -- wait state, arm state, fire state
 	signal present_state, next_state : fsm_states;

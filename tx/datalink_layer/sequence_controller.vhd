@@ -2,6 +2,10 @@ library ieee;
 use ieee.numeric_std.all;
 use ieee.std_logic_1164.all;
 
+-- Doet telkens 11 shifts van het dataregister gevolgd door 1 load
+-- Shifts/loads gebeuren telkens nadat de pn_generator een 31 chip sequentie heeft gegenereert
+-- Dit wordt aangegeven met pn_start
+
 entity sequence_controller is
 	port(clk 		: in std_logic;
 		 reset		: in std_logic;
@@ -19,6 +23,7 @@ architecture behave of sequence_controller is
 	-- tellen tot decimaal 10 -> 4 bits
 	signal present_count, next_count : unsigned(3 downto 0);
 begin
+	-- register voor de state
 	sym_sequence_controller : process(clk)
 	begin
 		if rising_edge(clk) then
@@ -32,6 +37,7 @@ begin
 		end if;
 	end process sym_sequence_controller;
 	
+	-- next state logica
 	com_sequence_controller : process(pn_start, present_state, present_count)
 	begin
 		case present_state is
@@ -53,6 +59,8 @@ begin
 		end case;
 	end process com_sequence_controller;
 
+	-- Output decoder : Mealy type (slechts 1 clock vertraging tss pn_start en sh/ld: tgv sh/ld operatie)
+	-- Moore type introduceert 2 clocks vertraging: 1 voor de toestandsverandering, nog 1 tgv de sh/ld operatie)
 	com_sequence_controller_out : process(present_state, present_count, pn_start)
 	begin
 		case present_state is

@@ -55,11 +55,12 @@ begin
 		wait;
 	end process clock;
 
+	-- process dat (al dan niet) out of sync pn codes voedt aan dpll
 	chip_clk : process
 		variable i : integer := 0;
 	begin
 		sdi_spread <= '0';
-		wait for (period * 14);		
+		wait for (period * 14);		-- speel hier met factor
 		loop
 			i := (i + 1) mod 30;
 			sdi_spread <= pn0(i);
@@ -70,9 +71,7 @@ begin
 	end process chip_clk;
 		
 		
-	-- ************************************************************************
-	--  Transition segment decoder
-	-- *************************************************************************
+
 	tb : process
 		procedure tbvector(constant stimvect : in std_logic_vector(0 downto 0)) is
 		begin	  
