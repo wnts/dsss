@@ -28,7 +28,7 @@ architecture behave of access_layer is
 		 sel		: in std_logic_vector(1 downto 0);
 		 seq_det	: out std_logic);
 	end component;
-	component pn_generator is
+	component pn_generator_rx is
 		port(clk		: in std_logic;
 			 reset		: in std_logic;
 			 en			: in std_logic;
@@ -68,7 +68,7 @@ begin
 				 sdi_spread => rx_baseband,
 				 sel		=> sel,
 				 seq_det	=> pn_reset);
-	pn_generator_inst : pn_generator
+	pn_generator_rx_inst : pn_generator_rx
 		port map(clk	  => clk,
 				 reset	  => pn_reset,
 				 en		  => chip_sample1,

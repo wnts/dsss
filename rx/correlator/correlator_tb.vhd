@@ -1,4 +1,5 @@
 library ieee;
+library dsss_rx;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use ieee.std_logic_unsigned.all;
@@ -19,7 +20,7 @@ architecture structural of correlator_tb is
 
 
 
-for uut : correlator use entity work.correlator(behave);
+for uut : correlator use entity dsss_rx.correlator(behave);
  
 	constant period		: time := 100 ns;
 	constant delay		: time :=  10 ns;

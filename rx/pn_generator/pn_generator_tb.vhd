@@ -1,4 +1,5 @@
 library ieee;
+library dsss_rx;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use ieee.std_logic_unsigned.all;
@@ -18,7 +19,7 @@ architecture structural of pn_generator_rx_tb is
 			 pn_gold	: out std_logic);	
 	end component;
 
-	for uut : pn_generator_rx use entity work.pn_generator_rx(behave);
+	for uut : pn_generator_rx use entity dsss_rx.pn_generator_rx(behave);
 
 	constant period		: time := 100 ns;
 	constant delay		: time :=  10 ns;

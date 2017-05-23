@@ -1,4 +1,5 @@
 library ieee;
+library dsss_rx;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use ieee.std_logic_unsigned.all;
@@ -18,7 +19,7 @@ architecture structural of matched_filter_tb is
 	end component;
 
 
-for uut : matched_filter use entity work.matched_filter(behave);
+for uut : matched_filter use entity dsss_rx.matched_filter(behave);
  
 	constant period		: time := 100 ns;
 	constant delay		: time :=  10 ns;
